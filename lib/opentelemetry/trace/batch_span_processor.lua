@@ -2,12 +2,12 @@ local otel_global = require("opentelemetry.global")
 local timer_at = ngx.timer.at
 local now = ngx.now
 local create_timer
-local batch_size_metric = "otel.bsp.batch_size"
-local buffer_utilization_metric = "otel.bsp.buffer_utilization"
-local dropped_spans_metric = "otel.bsp.dropped_spans"
-local export_success_metric = "otel.bsp.export.success"
-local exported_spans_metric = "otel.bsp.exported_spans"
-local exporter_failure_metric = "otel.otlp_exporter.failure"
+local batch_size_metric = "debug.otel.bsp.batch_size"
+local buffer_utilization_metric = "debug.otel.bsp.buffer_utilization"
+local dropped_spans_metric = "debug.otel.bsp.dropped_spans"
+local export_success_metric = "debug.otel.bsp.export.success"
+local exported_spans_metric = "debug.otel.bsp.exported_spans"
+local exporter_failure_metric = "debug.otel.otlp_exporter.failure"
 
 local _M = {
 }
