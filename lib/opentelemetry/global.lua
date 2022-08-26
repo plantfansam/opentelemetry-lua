@@ -1,6 +1,18 @@
 local metrics_reporter = require("opentelemetry.metrics_reporter")
 
-local _M = { context_storage = nil, metrics_reporter = metrics_reporter }
+_M = {
+    context_storage = nil,
+    metrics_reporter = metrics_reporter,
+    settings = {
+        otel_exporter = {
+            otlp = {
+                headers = {},
+                endpoint = "http://localhost:4318/v1/traces",
+                timeout = 10000,
+            }
+        }
+    }
+}
 
 function _M.set_tracer_provider(tp)
     _M.tracer_provider = tp
