@@ -1,3 +1,4 @@
+local http_c = require("opentelemetry.trace.exporter.http_client")
 local pb = require("opentelemetry.trace.exporter.pb")
 local otel_global = require("opentelemetry.global")
 local util = require("opentelemetry.util")
@@ -14,7 +15,7 @@ local mt = {
 
 function _M.new(http_client, timeout_ms)
     local self = {
-        client = http_client,
+        client = http_client or http_c.new(),
         timeout_ms = timeout_ms or DEFAULT_TIMEOUT_MS,
     }
     return setmetatable(self, mt)

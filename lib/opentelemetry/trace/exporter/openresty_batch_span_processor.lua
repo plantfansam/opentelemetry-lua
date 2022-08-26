@@ -24,7 +24,6 @@ local mt = {
 -- create a batch span processor.
 --
 -- @param exporter_module A module whose .new() method returns an exporter.
--- @param exporter_opts A table of options to pass to the exporter instance.
 -- @param opts Table with different BSP options
 --          opts.max_queue_size: maximum queue size to buffer spans for delayed processing, default 2048
 --          opts.batch_timeout: maximum duration for constructing a batch, default 5000ms
@@ -32,14 +31,12 @@ local mt = {
 --          opts.max_export_batch_size: maximum number of spans to process in a single batch, default 512
 -- @return              batch span processor
 --------------------------------------------------------------------------------
-function _M.new(exporter_module, exporter_opts, opts)
+function _M.new(exporter_module, opts)
     assert(exporter_module and exporter_module.new)
     opts = opts or {}
-
     return setmetatable(
         {
             exporter_module = exporter_module,
-
             max_queue_size = opts.max_queue_size or 2048,
             export_timeout_ms = opts.export_timeout_ms or 30000,
             max_export_batch_size = opts.max_export_batch_size or 512,
@@ -86,7 +83,7 @@ end
 -- @param exporter The exporter instance to use for exporting the batch.
 -- @param batch The batch of spans to export. Should be < max_export_batch_size.
 --------------------------------------------------------------------------------
-local function export_batch(exporter, batch)
+function _M.export_batch(exporter, batch)
     otel_global.metrics_reporter:record_value(batch_size_metric, #batch)
     local success, err = exporter:export_spans(batch)
     report_export_result(success, err, #batch)
@@ -102,12 +99,12 @@ end
 -- @param exporter_module A module whose .new() method returns an exporter.
 -- @param batch The batch of spans to export.
 --------------------------------------------------------------------------------
-local function delayed_export_batch(premature, exporter_module, exporter_opts, batch)
+local function delayed_export_batch(premature, exporter, batch)
     if premature then
         ngx.log(ngx.WARN, "Exporting batch after ngx.timer.at callback was invoked prematurely (SIGHUP or shutdown")
     end
 
-    export_batch(exporter_module.new(exporter_opts), batch)
+    _M.export_batch(exporter.new(), batch)
 end
 
 --------------------------------------------------------------------------------
@@ -138,14 +135,15 @@ function _M.on_end(self, span)
 
     -- Schedule a batch for export if queue >= max_export_batch_size
     if not self.stopped and #self.queue >= self.max_export_batch_size then
-        -- Export the batch using ngx.timer.at, which runs in the background.
-        -- This hopefully _shouldn't_ lead to race conditions in
-        -- lua-nginx-module since calling ngx.timer.at doesn't surrender control
-        -- to the NGINX event loop, but rather schedules something for later
-        -- execution.
+        -- Export the batch using ngx.timer.at, which runs in an OpenResty
+        -- "light thread".  See
+        -- https://github.com/openresty/lua-nginx-module#ngxtimerat. This
+        -- hopefully _shouldn't_ lead to race conditions in lua-nginx-module
+        -- since calling ngx.timer.at doesn't surrender control to the NGINX
+        -- event loop, but rather schedules something for later execution.
         local batch
         self.queue, batch = _M.extract_batch(self.queue, self.max_export_batch_size)
-        timer_at(0, delayed_export_batch, self.exporter_module, self.exporter_opts, batch)
+        timer_at(0, delayed_export_batch, self.exporter_module, batch)
     end
 end
 
@@ -177,9 +175,21 @@ function _M.force_flush(self)
     if self.stopped then
         return
     end
+
+    -- Execute the exports synchronously, since force_flush will be called in a
+    -- shutdown or SIGHUP context.
+    local exporter = self.exporter_module.new()
+    for _i = 1, #self.queue, self.max_export_batch_size do
+        local batch
+        self.queue, batch = _M.extract_batch(self.queue, self.max_export_batch_size)
+
+        self.export_batch(exporter, batch)
+    end
 end
 
 function _M.shutdown(self)
+    self:force_flush()
+    self.stopped = true
 end
 
 return _M

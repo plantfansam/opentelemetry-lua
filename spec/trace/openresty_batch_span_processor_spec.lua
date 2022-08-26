@@ -21,9 +21,9 @@ describe("batch span processor", function()
             local _ctx_2, span_2 = tracer:start(context.current(), "ok")
             local _ctx_3, span_3 = tracer:start(context.current(), "ok")
             local test_bsp = bsp.new(cse, { max_queue_size = 2 })
-            -- mark bsp as closed so that no export takes place, allowing test
+            -- mark bsp as stopped so that no export takes place, allowing test
             -- of queue overflow.
-            test_bsp.closed = true
+            test_bsp.stopped = true
             test_bsp:on_end(span_1)
             test_bsp:on_end(span_2)
             test_bsp:on_end(span_3)
@@ -78,11 +78,46 @@ describe("batch span processor", function()
     end)
 
     describe("flush_all", function()
-        it("calls ", function()
-            local test_bsp = bsp.new(cse, {}, { max_queue_size = 1000 })
-            local queue, batch = bsp.extract_batch({}, 1)
-            assert.are.same(queue, {})
-            assert.are.same(batch, {})
+        it("calls export_batch once if queue length is max batch size", function()
+            local test_bsp = bsp.new(cse, { max_queue_size = 2, max_export_batch_size = 2})
+            stub(test_bsp, "export_batch")
+            local _ctx, span_1 = tracer:start(context.current(), "a")
+            local _ctx_2, span_2 = tracer:start(context.current(), "b")
+            test_bsp.queue = { span_1, span_2 }
+
+            test_bsp:force_flush()
+            assert.stub(test_bsp.export_batch).was.called(1)
+        end)
+
+        it("calls export_batch until queue is empty", function()
+            local test_bsp = bsp.new(cse, { max_queue_size = 7, max_export_batch_size = 3})
+            stub(test_bsp, "export_batch")
+            local _ctx, span_1 = tracer:start(context.current(), "a")
+            local _ctx_2, span_2 = tracer:start(context.current(), "b")
+            local _ctx_3, span_3 = tracer:start(context.current(), "c")
+            local _ctx_4, span_4 = tracer:start(context.current(), "d")
+            local _ctx_5, span_5 = tracer:start(context.current(), "e")
+            local _ctx_6, span_6 = tracer:start(context.current(), "f")
+            local _ctx_7, span_7 = tracer:start(context.current(), "g")
+            test_bsp.queue = { span_1, span_2, span_3, span_4, span_5, span_6, span_7 }
+
+            test_bsp:force_flush()
+            assert.stub(test_bsp.export_batch).was.called(3)
+        end)
+
+        it("does not call export_batch if queue is empty", function()
+            local test_bsp = bsp.new(cse, { max_queue_size = 7, max_export_batch_size = 3})
+            stub(test_bsp, "export_batch")
+            test_bsp:force_flush()
+            assert.stub(test_bsp.export_batch).was_not_called()
+        end)
+
+        it("does not call export_batch if .stopped is true", function()
+            local test_bsp = bsp.new(cse, {})
+            stub(test_bsp, "export_batch")
+            test_bsp.stopped = true
+            test_bsp:force_flush()
+            assert.stub(test_bsp.export_batch).was_not_called()
         end)
     end)
 end)
