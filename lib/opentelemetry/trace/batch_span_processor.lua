@@ -35,12 +35,14 @@ local function report_result(success, err, batch_size)
 end
 
 local function process_batches(premature, self, batches)
+     ngx.log(ngx.NOTICE, "running process_batches")
     if premature then
         return
     end
     otel_global.metrics_reporter:observe_value(buffer_utilization_metric, #self.queue / self.max_queue_size)
 
     for _, batch in ipairs(batches) do
+        ngx.log(ngx.NOTICE, "exporting spans for batch of size " .. #batch)
         otel_global.metrics_reporter:record_value(batch_size_metric, #batch)
         local success, err = self.exporter:export_spans(batch)
         report_result(success, err, #batch)
@@ -48,6 +50,7 @@ local function process_batches(premature, self, batches)
 end
 
 local function process_batches_timer(self, batches)
+    ngx.log(ngx.NOTICE, "running process_batches_timer")
     local hdl, err = timer_at(0, process_batches, self, batches)
     if not hdl then
         ngx.log(ngx.ERR, "failed to create timer: ", err)
@@ -118,6 +121,7 @@ function _M.on_end(self, span)
         end
     end
 
+    ngx.log(ngx.NOTICE, "span ended; queue size = " .. self:get_queue_size().. " batches_to_process count " .. #self.batches_to_process)
     -- Make a batch if batch timeout has been reached or queue >= batch size
     if now() - self.first_queue_t >= self.batch_timeout and #self.queue > 0 then
         table.insert(self.batches_to_process, self.queue)
@@ -131,6 +135,7 @@ function _M.on_end(self, span)
     -- simultaneously to reduce the number of ngx.timer.at calls, since they
     -- incur overhead.
     if #self.batches_to_process >= self.maximum_pending_batches then
+        ngx.log(ngx.NOTICE, "setting process batch timer")
         -- Move batch to process to a local variable so that there is not a race
         -- condition
         local batches_to_process = self.batches_to_process

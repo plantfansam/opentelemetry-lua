@@ -29,6 +29,7 @@ end
 
 function _M.do_request(self, body)
     local httpc = http.new()
+    ngx.log(ngx.NOTICE, "making request to collector")
     httpc:set_timeout(self.timeout * 1000)
 
     local res, err = httpc:request_uri(self.uri, {
@@ -49,6 +50,7 @@ function _M.do_request(self, body)
         return nil, "request failed: " .. res.status
     end
 
+    ngx.log(ngx.NOTICE, "request to collector succeeded")
     return res, nil
 end
 
