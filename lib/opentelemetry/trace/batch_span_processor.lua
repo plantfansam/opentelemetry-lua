@@ -163,8 +163,9 @@ function _M.on_end(self, span)
         end
 
         -- export spans
-        process_batches_timer(self, self.batch_to_process)
+        local batch_to_process = self.batch_to_process
         self.batch_to_process = {}
+        process_batches_timer(self, batch_to_process)
     end
 
     table.insert(self.queue, span)
