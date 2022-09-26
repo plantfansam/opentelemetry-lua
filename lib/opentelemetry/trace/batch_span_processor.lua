@@ -1,3 +1,5 @@
+require("table.new")
+require("table.clear")
 local otel_global = require("opentelemetry.global")
 local timer_at = ngx.timer.at
 local now = ngx.now
@@ -67,12 +69,12 @@ local function flush_batches(premature, self)
     -- batch timeout
     if now() - self.first_queue_t >= self.batch_timeout and #self.queue > 0 then
         table.insert(self.batches_to_process, self.queue)
-        self.queue = {}
+        table.clear(self.queue)
     end
 
     -- copy batches_to_process, avoid conflict with on_end
     local batches_to_process = self.batches_to_process
-    self.batches_to_process = {}
+    table.clear(self.batches_to_process)
 
     process_batches(nil, self, batches_to_process)
 
@@ -124,7 +126,7 @@ function _M.new(exporter, opts)
     if opts.drop_on_queue_full ~= nil and not opts.drop_on_queue_full then
         drop_on_queue_full = false
     end
-
+    local max_batches = math.floor((opts.max_queue_size / opts.max_export_batch_size) + 1.5)
     local self = {
         exporter = exporter,
         drop_on_queue_full = drop_on_queue_full,
@@ -132,9 +134,9 @@ function _M.new(exporter, opts)
         batch_timeout = opts.batch_timeout or 5,
         inactive_timeout = opts.inactive_timeout or 2,
         max_export_batch_size = opts.max_export_batch_size or 256,
-        queue = {},
+        queue = table.new(opts.max_export_batch_size + 1, opts.max_export_batch_size + 1),
         first_queue_t = 0,
-        batches_to_process = {},
+        batches_to_process = table.new(max_batches, max_batches),
         is_timer_running = false,
         closed = false,
         dropping_count = 0,
@@ -162,9 +164,9 @@ function _M.on_end(self, span)
         end
 
         -- export spans
-        otel_global.metrics_reporter:observe_value(buffer_utilization_metric, self:get_queue_size()/ self.max_queue_size)
+        otel_global.metrics_reporter:observe_value(buffer_utilization_metric, self:get_queue_size() / self.max_queue_size)
         local batches_to_process = self.batches_to_process
-        self.batches_to_process = {}
+        table.clear(self.batches_to_process)
         process_batches_timer(self, batches_to_process)
     end
 
@@ -175,11 +177,11 @@ function _M.on_end(self, span)
 
     if #self.queue >= self.max_export_batch_size then
         table.insert(self.batches_to_process, self.queue)
-        self.queue = {}
+        table.clear(self.queue)
     end
 
     if not self.is_timer_running then
-        otel_global.metrics_reporter:observe_value(buffer_utilization_metric, self:get_queue_size()/ self.max_queue_size)
+        otel_global.metrics_reporter:observe_value(buffer_utilization_metric, self:get_queue_size() / self.max_queue_size)
         create_timer(self, self.inactive_timeout)
     end
 end
@@ -200,7 +202,7 @@ end
 function _M.flush_all(self, with_timer)
     if #self.queue > 0 then
         table.insert(self.batches_to_process, self.queue)
-        self.queue = {}
+        table.clear(self.queue)
     end
 
     if #self.batches_to_process == 0 then
@@ -208,7 +210,7 @@ function _M.flush_all(self, with_timer)
     end
 
     local batches_to_process = self.batches_to_process
-    self.batches_to_process = {}
+    table.clear(self.batches_to_process)
     if with_timer then
         process_batches_timer(self, batches_to_process)
     else
