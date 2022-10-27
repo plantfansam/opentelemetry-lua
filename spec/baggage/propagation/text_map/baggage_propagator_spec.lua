@@ -1,13 +1,21 @@
 local baggage = require "opentelemetry.baggage"
 local baggage_propagator = require "opentelemetry.baggage.propagation.text_map.baggage_propagator"
+local tracer_provider = require "opentelemetry.trace.tracer_provider"
 local context = require "opentelemetry.context"
-local test_utils = require("spec.test_utils")
+
+local function newCarrier(header, header_return)
+    local r = { headers = {} }
+    r.headers[header] = header_return
+    r.get_headers = function() return r.headers end
+    r.set_header = function(name, val) r.headers[name] = val end
+    return r
+end
 
 -- todo(plantfansam): handle multiple baggage headers
 describe("baggage propagator", function()
     describe(".extract", function()
         it("handles absent header", function()
-            local carrier = test_utils.new_carrier({ foo = "bar" })
+            local carrier = newCarrier("foo", "bar")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -16,7 +24,7 @@ describe("baggage propagator", function()
         end)
 
         it("handles empty string", function()
-            local carrier = test_utils.new_carrier({ baggage = "" })
+            local carrier = newCarrier("baggage", "")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -25,7 +33,7 @@ describe("baggage propagator", function()
         end)
 
         it("handles simplest case", function()
-            local carrier = test_utils.new_carrier({ baggage = "userId=1" })
+            local carrier = newCarrier("baggage", "userId=1")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -34,7 +42,7 @@ describe("baggage propagator", function()
         end)
 
         it("handles unescaping percent encoding", function()
-            local carrier = test_utils.new_carrier({ baggage = "userId=Am%C3%A9lie,serverNode=DF%2028,isProduction=false" })
+            local carrier = newCarrier("baggage", "userId=Am%C3%A9lie,serverNode=DF%2028,isProduction=false")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -45,7 +53,7 @@ describe("baggage propagator", function()
         end)
 
         it("extracts metadata", function()
-            local carrier = test_utils.new_carrier({ baggage = "userId=Am%C3%A9lie;motto=yolo;hi=mom,serverNode=DF%2028;motto=yolo2" })
+            local carrier = newCarrier("baggage", "userId=Am%C3%A9lie;motto=yolo;hi=mom,serverNode=DF%2028;motto=yolo2")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -55,7 +63,7 @@ describe("baggage propagator", function()
         end)
 
         it("handles malformed strings", function()
-            local carrier = test_utils.new_carrier({ baggage = "oi;=un;unx;p;=aun" })
+            local carrier = newCarrier("baggage", "oi;=un;unx;p;=aun")
             local ctx = context.new()
             local baggage_propagator = baggage_propagator.new()
             local new_ctx = baggage_propagator:extract(ctx, carrier)
@@ -66,7 +74,7 @@ describe("baggage propagator", function()
 
     describe(".inject", function()
         it("does nothing when baggage has no entries", function()
-            local carrier = test_utils.new_carrier({ foo = "bar" })
+            local carrier = newCarrier("foo", "bar")
             local bgg = baggage.new({})
             local ctx = context.new():inject_baggage(bgg)
             local baggage_propagator = baggage_propagator.new()
@@ -76,7 +84,7 @@ describe("baggage propagator", function()
         end)
 
         it("injects baggage header", function()
-            local carrier = test_utils.new_carrier({ foo = "bar" })
+            local carrier = newCarrier("foo", "bar")
             local bgg = baggage.new({})
             bgg = bgg:set_value("userId", "Amélie", "mycoolmetadata;hi=mom")
             local ctx = context.new()
@@ -87,7 +95,7 @@ describe("baggage propagator", function()
         end)
 
         it("injects multiple values into header", function()
-            local carrier = test_utils.new_carrier({ foo = "bar" })
+            local carrier = newCarrier("foo", "bar")
             local bgg = baggage.new({})
             bgg = bgg:set_value("foo", "bar")
             bgg = bgg:set_value("userId", "Amélie", "mycoolmetadata;hi=mom")

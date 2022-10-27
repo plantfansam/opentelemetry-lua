@@ -5,7 +5,16 @@ local text_map_propagator = require "opentelemetry.trace.propagation.text_map.tr
 local baggage_propagator = require "opentelemetry.baggage.propagation.text_map.baggage_propagator"
 local noop_propagator = require "opentelemetry.trace.propagation.text_map.noop_propagator"
 local context = require("opentelemetry.context")
-local test_utils = require("spec.test_utils")
+
+-- We're setting these on ngx.req but we aren't running openresty in these
+-- tests, so we'll mock that out (ngx.req supports get_headers() and set_header(header_name))
+local function newCarrier(headers_table)
+    local r = { headers = {} }
+    r.headers = headers_table
+    r.get_headers = function() return r.headers end
+    r.set_header = function(name, val) r.headers[name] = val end
+    return r
+end
 
 -- We'll need to add more propagators to the repo (Jaeger, B3, etc), in order to
 -- fully test this.
@@ -30,7 +39,7 @@ describe("composite propagator", function()
             span_context.trace_id,
             span_context.span_id,
             span_context.trace_flags)
-        local carrier = test_utils.new_carrier({})
+        local carrier = newCarrier({})
 
         it("should add headers for each propagator", function()
             cp:inject(new_ctx, carrier)
@@ -52,7 +61,7 @@ describe("composite propagator", function()
             local np       = noop_propagator.new()
             local cp       = composite_propagator.new({ tmp, bp, np })
             local trace_id = "10f5b3bcfe3f0c2c5e1ef150fe0b5872"
-            local carrier  = test_utils.new_carrier(
+            local carrier  = newCarrier(
                 { traceparent = string.format("00-%s-172accbce5f048db-01", trace_id),
                     baggage = "foo=bar;ok" })
             local ctx      = context.new()
