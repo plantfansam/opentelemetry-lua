@@ -8,8 +8,8 @@
 -- https://w3c.github.io/trace-context/#load-balancer-deferred-sampling
 --------------------------------------------------------------------------------
 local span_context_new = require("opentelemetry.trace.span_context").new
-local text_map_getter_new = require("opentelemetry.trace.propagation.text_map.getter").new
-local text_map_setter_new = require("opentelemetry.trace.propagation.text_map.setter").new
+local text_map_getter_new = require("opentelemetry.trace.propagation.text_map.response_header_getter").new
+local text_map_setter_new = require("opentelemetry.trace.propagation.text_map.response_header_setter").new
 local util = require("opentelemetry.util")
 local traceresponse_header = "traceresponse"
 local traceresponse_header_version = "00"
