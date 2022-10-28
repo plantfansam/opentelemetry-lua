@@ -42,6 +42,7 @@ build = {
        ["opentelemetry.trace.propagation.text_map.request_header_getter"] = "lib/opentelemetry/trace/propagation/text_map/request_header_getter.lua",
        ["opentelemetry.trace.propagation.text_map.request_header_setter"] = "lib/opentelemetry/trace/propagation/text_map/request_header_setter.lua",
        ["opentelemetry.trace.propagation.text_map.noop_propagator"] = "lib/opentelemetry/trace/propagation/text_map/noop_propagator.lua",
+       ["opentelemetry.trace.propagation.text_map.trace_response_propagator"] = "lib/opentelemetry/trace/propagation/text_map/trace_response_propagator.lua",
        ["opentelemetry.trace.recording_span"] = "lib/opentelemetry/trace/recording_span.lua",
        ["opentelemetry.trace.sampling.always_off_sampler"] = "lib/opentelemetry/trace/sampling/always_off_sampler.lua",
        ["opentelemetry.trace.sampling.always_on_sampler"] = "lib/opentelemetry/trace/sampling/always_on_sampler.lua",
