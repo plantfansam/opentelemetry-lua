@@ -1,6 +1,5 @@
 --- A simple logger that uses print(). SDK loggers should adhere to the same interface.
 -- @module logger
-
 local _M = {}
 
 local mt = { __index = _M }
