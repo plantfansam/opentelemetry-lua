@@ -55,7 +55,6 @@ describe("start_span()", function()
         assert.are_same(old_sc.tracestate, new_sc.tracestate)
     end)
 
-
     it("returns span from current context if it's nonrecording", function()
         __OTEL.context_storage = {}
         local old_sc = span_context.new("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaa")

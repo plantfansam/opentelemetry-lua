@@ -19,23 +19,25 @@ describe("context", function()
 
     describe("current", function()
         it("returns last element stored in stack at context_key", function()
-            local ctx_1 = context.new({ foo = "bar"})
-            local ctx_2 = context.new({ foo = "baz"})
-            __OTEL.context_storage = { __opentelemetry_context__ = {ctx_1, ctx_2} }
+            local ctx_1 = context.new({ foo = "bar" })
+            local ctx_2 = context.new({ foo = "baz" })
+            __OTEL.context_storage = { __opentelemetry_context__ = { ctx_1, ctx_2 } }
             assert.are.equal(ctx_2, context.current())
         end)
     end)
 
     describe("attach", function()
-        it("creates new table at context_key if no table present and returns token matching length of stack after adding element", function()
-            local ctx = context.new({ foo = "bar"})
-            local token = ctx:attach()
-            assert.are.equal(token, 1)
-        end)
+        it(
+            "creates new table at context_key if no table present and returns token matching length of stack after adding element",
+            function()
+                local ctx = context.new({ foo = "bar" })
+                local token = ctx:attach()
+                assert.are.equal(token, 1)
+            end)
 
         it("appends to existing table at context_key", function()
-            local ctx_1 = context.new({ foo = "bar"})
-            local ctx_2 = context.new({ foo = "baz"})
+            local ctx_1 = context.new({ foo = "bar" })
+            local ctx_2 = context.new({ foo = "baz" })
             local token_1 = ctx_1:attach()
             local token_2 = ctx_2:attach()
             assert.are.equal(token_1, 1)
@@ -92,7 +94,13 @@ describe("current_span()", function()
     it("returns span stored on current context when it exists", function()
         __OTEL.context_storage = {}
         -- TODO replace span mock with actual span from API
-        local span = { context = { is_valid = function() return true end } }
+        local span = {
+            context = {
+                is_valid = function()
+                    return true
+                end
+            }
+        }
         local ctx = context.with_span(span)
         ctx:attach()
         assert.are_equal(context.span_from_context(), span)

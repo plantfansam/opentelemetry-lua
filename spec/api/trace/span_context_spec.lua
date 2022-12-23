@@ -1,7 +1,7 @@
 require("spec.api.spec_helper")
 
 local span_context = require("opentelemetry.api.trace.span_context")
-local traceflags   = require("opentelemetry.api.trace.traceflags")
+local traceflags = require("opentelemetry.api.trace.traceflags")
 
 describe("new()", function()
     it("instantiates new tracestate and traceflags if not supplied", function()

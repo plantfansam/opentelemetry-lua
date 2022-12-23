@@ -12,7 +12,7 @@ end)
 
 describe("new_trace_id()", function()
     it("returns 32-character hexadecimal span id", function()
-        for i=1,100 do
+        for i = 1, 100 do
             local id = id_generator.generate_trace_id()
             local id_2 = id_generator.generate_trace_id()
             local m = string.match(id, "^%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x$")
