@@ -1,6 +1,5 @@
 --- The tracer_provider provides access to @{api.trace.tracer}(s).
 -- @module api.trace.tracer_provider
-
 local tracer = require("opentelemetry.api.trace.tracer")
 
 local _M = {}

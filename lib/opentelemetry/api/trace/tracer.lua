@@ -57,13 +57,8 @@ function _M:start_span(_name, parent_context, _span_kind, _attributes, _links, _
     if sp:is_recording() then
         local psp_ctx = sp:get_span_context()
 
-        return span.from_span_context(span_context.new(
-            psp_ctx.trace_id,
-            psp_ctx.span_id,
-            psp_ctx.trace_flags,
-            psp_ctx.tracestate,
-            psp_ctx.is_remote
-        ))
+        return span.from_span_context(span_context.new(psp_ctx.trace_id, psp_ctx.span_id, psp_ctx.trace_flags,
+                                                       psp_ctx.tracestate, psp_ctx.is_remote))
     else
         -- At this point, we have a nonrecording span, either from the parent context OR the default nonrecording span
         -- returned by context.span_from_context.

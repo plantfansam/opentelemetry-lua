@@ -1,12 +1,6 @@
-local _M = {
-    MAX_KEY_LEN = 256,
-    MAX_VAL_LEN = 256,
-    MAX_ENTRIES = 32,
-}
+local _M = { MAX_KEY_LEN = 256, MAX_VAL_LEN = 256, MAX_ENTRIES = 32 }
 
-local mt = {
-    __index = _M
-}
+local mt = { __index = _M }
 
 local function validate_member_key(key)
     if #key > _M.MAX_KEY_LEN then
@@ -33,7 +27,7 @@ local function validate_member_value(value)
         return nil
     end
     return string.match(value,
-        [[^([ !"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~]*[!"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~])%s*$]])
+                        [[^([ !"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~]*[!"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~])%s*$]])
 end
 
 function _M.new(values)
@@ -81,7 +75,7 @@ function _M.parse_tracestate(tracestate)
                     ngx.log(ngx.WARN, error_message)
                     return _M.new({})
                 end
-                table.insert(new_tracestate, {key, value})
+                table.insert(new_tracestate, { key, value })
             end
         end
     end
@@ -106,7 +100,7 @@ function _M.set(self, key, value)
         table.remove(self.values)
         ngx.log(ngx.WARN, "tracestate max values exceeded, removing rightmost entry")
     end
-    table.insert(self.values, 1, {key, value})
+    table.insert(self.values, 1, { key, value })
     return self
 end
 

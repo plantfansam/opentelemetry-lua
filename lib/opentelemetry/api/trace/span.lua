@@ -3,7 +3,6 @@
 --
 -- @module api.trace.span
 ------------------------------------------------------------------------------------------------------------------------
-
 local span_context = require('lib.opentelemetry.api.trace.span_context')
 
 local _M = {}
@@ -18,7 +17,7 @@ local mt = { __index = _M }
 -- @return @{api.trace.span}
 ------------------------------------------------------------------------------------------------------------------------
 function _M.new(span_ctx)
-    return setmetatable({ span_context = span_ctx or span_context.new()}, mt)
+    return setmetatable({ span_context = span_ctx or span_context.new() }, mt)
 end
 
 ------------------------------------------------------------------------------------------------------------------------

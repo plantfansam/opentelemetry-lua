@@ -4,16 +4,12 @@
 --
 -- @module api.trace.span_context
 ------------------------------------------------------------------------------------------------------------------------
-
 local id_generator = require("opentelemetry.api.trace.id_generator")
 local tracestate = require("opentelemetry.api.trace.tracestate")
 local traceflags = require("opentelemetry.api.trace.traceflags")
-local utils      = require("opentelemetry.api.utils.utils")
+local utils = require("opentelemetry.api.utils.utils")
 
-local _M = {
-    non_recording_span_ID = "0000000000000000",
-    INVALID_TRACE_ID = "00000000000000000000000000000000",
-}
+local _M = { non_recording_span_ID = "0000000000000000", INVALID_TRACE_ID = "00000000000000000000000000000000" }
 
 local mt = { __index = _M }
 
@@ -30,11 +26,11 @@ local mt = { __index = _M }
 ------------------------------------------------------------------------------------------------------------------------
 function _M.new(trace_id, span_id, trace_flags, trace_state, remote)
     local self = {
-        trace_id    = trace_id or id_generator.generate_trace_id(),
-        span_id     = span_id or id_generator.generate_span_id(),
-        traceflags  = trace_flags or traceflags.new(),
+        trace_id = trace_id or id_generator.generate_trace_id(),
+        span_id = span_id or id_generator.generate_span_id(),
+        traceflags = trace_flags or traceflags.new(),
         trace_state = trace_state or tracestate.new({}),
-        remote      = remote or false,
+        remote = remote or false
     }
     return setmetatable(self, mt)
 end

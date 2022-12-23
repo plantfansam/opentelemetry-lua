@@ -2,16 +2,12 @@
 -- The context module represents OpenTelemetry context. Beware - this is different than SpanContext!
 -- @module api.context
 ------------------------------------------------------------------------------------------------------------------------
-
-local _M = {
-}
+local _M = {}
 
 local span = require("lib.opentelemetry.api.trace.span")
 local util = require("opentelemetry.api.utils.utils")
 
-local mt = {
-    __index = _M
-}
+local mt = { __index = _M }
 
 local context_key = "__opentelemetry_context__"
 local baggage_context_key = "__opentelemetry_baggage__"
@@ -56,9 +52,8 @@ function _M:detach(token)
         table.remove(__OTEL.context_storage[context_key])
         return true
     else
-        local error_message = "Token does not match (" ..
-            #__OTEL.context_storage[context_key] ..
-            " context entries in stack, token provided was " .. token .. ")."
+        local error_message = "Token does not match (" .. #__OTEL.context_storage[context_key] ..
+                                  " context entries in stack, token provided was " .. token .. ")."
         __OTEL.logger:warn(error_message)
         return false
     end
@@ -108,7 +103,7 @@ end
 -- @return @{api.context}
 ------------------------------------------------------------------------------------------------------------------------
 function _M.with_span(span)
-    return _M.new({ [span_key] = span})
+    return _M.new({ [span_key] = span })
 end
 
 ------------------------------------------------------------------------------------------------------------------------

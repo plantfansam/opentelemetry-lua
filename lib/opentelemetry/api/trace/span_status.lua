@@ -12,10 +12,7 @@ local _M = { UNSET = 0, OK = 1, ERROR = 2 }
 -- @param[type=int] code The status code. Defaults to UNSET.
 ------------------------------------------------------------------------------------------------------------------------
 function _M.new(code)
-    return {
-        code = code or _M.UNSET,
-        description = nil
-    }
+    return { code = code or _M.UNSET, description = nil }
 end
 
 return _M
