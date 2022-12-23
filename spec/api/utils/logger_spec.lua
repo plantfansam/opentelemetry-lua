@@ -2,6 +2,7 @@ local logger = require("lib.opentelemetry.api.utils.logger")
 
 describe("new", function()
     it("honors valid log levels", function()
+        package.path = package.path .. ';../?.lua'
         local l = logger.new("debug")
         assert.are.equal(l.log_level, 0)
     end)

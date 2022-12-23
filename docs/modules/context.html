@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>context</strong></li>
+  <li><a href="../modules/opentelemetry.html">opentelemetry</a></li>
+  <li><a href="../modules/api.trace.attribute.html">api.trace.attribute</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.utils.env_vars.html">api.utils.env_vars</a></li>
+  <li><a href="../modules/api.utils.logger.html">api.utils.logger</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>context</code></h1>
+<p>local baggage = require("opentelemetry.baggage")
+ local non_recording_span_new = require("opentelemetry.trace.non_recording_span").new
+ local noop_span = require("opentelemetry.trace.noop_span")
+ local util = require("opentelemetry.util")</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new (entries, span)</a></td>
+	<td class="summary">Create new context with set of entries</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#attach">attach (self)</a></td>
+	<td class="summary">Set this context as current by pushing it on stack stored at context_key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#detach">detach (self, token)</a></td>
+	<td class="summary">Detach current context, setting current context to previous element in stack
+ If token does not match length of elements in stack, returns false and error
+ string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#current">current ()</a></td>
+	<td class="summary">Get current context, which is the final element in stack stored at
+ context_key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get">get (self, key)</a></td>
+	<td class="summary">Retrieve value for key in context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set">set (self, key, value)</a></td>
+	<td class="summary">Set value for key in context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#inject_baggage">inject_baggage (self, baggage)</a></td>
+	<td class="summary">Inject baggage into current context</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#extract_baggage">extract_baggage (self)</a></td>
+	<td class="summary">Extract baggage from context</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new (entries, span)</strong>
+    </dt>
+    <dd>
+    Create new context with set of entries
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">entries</span>
+
+        </li>
+        <li><span class="parameter">span</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        context
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "attach"></a>
+    <strong>attach (self)</strong>
+    </dt>
+    <dd>
+    Set this context as current by pushing it on stack stored at context_key.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        token to be used for detaching
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "detach"></a>
+    <strong>detach (self, token)</strong>
+    </dt>
+    <dd>
+    Detach current context, setting current context to previous element in stack
+ If token does not match length of elements in stack, returns false and error
+ string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">token</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "current"></a>
+    <strong>current ()</strong>
+    </dt>
+    <dd>
+    Get current context, which is the final element in stack stored at
+ context_key.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean, string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get"></a>
+    <strong>get (self, key)</strong>
+    </dt>
+    <dd>
+    Retrieve value for key in context.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">key</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        value stored at key
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set"></a>
+    <strong>set (self, key, value)</strong>
+    </dt>
+    <dd>
+    Set value for key in context.  This returns a new context object.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">key</span>
+
+        </li>
+        <li><span class="parameter">value</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        context
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "inject_baggage"></a>
+    <strong>inject_baggage (self, baggage)</strong>
+    </dt>
+    <dd>
+    Inject baggage into current context
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">baggage</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        context
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "extract_baggage"></a>
+    <strong>extract_baggage (self)</strong>
+    </dt>
+    <dd>
+    Extract baggage from context
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        baggage
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-12-22 10:38:05 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

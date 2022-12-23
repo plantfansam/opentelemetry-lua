@@ -1,0 +1,28 @@
+local id_generator = require("opentelemetry.api.trace.id_generator")
+
+describe("new_span_id()", function()
+    it("returns 16-character hexadecimal span id", function()
+        local id = id_generator.generate_span_id()
+        local id_2 = id_generator.generate_span_id()
+        assert.is_not_nil(string.match(id, "^%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x$"))
+        assert.are_same(type(id), "string")
+        assert.are_not.equal(id, id_2)
+    end)
+end)
+
+describe("new_trace_id()", function()
+    it("returns 32-character hexadecimal span id", function()
+        for i=1,100 do
+            local id = id_generator.generate_trace_id()
+            local id_2 = id_generator.generate_trace_id()
+            local m = string.match(id, "^%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x$")
+            local m2 = string.match(id_2, "^%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x$")
+            assert.is_same(string.len(m), 32)
+            assert.is_same(string.len(m2), 32)
+            assert.is_not_nil(m)
+            assert.is_not_nil(m2)
+            assert.are_same(type(id), "string")
+            assert.are_not.equal(id, id_2)
+        end
+    end)
+end)
