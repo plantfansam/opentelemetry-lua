@@ -47,7 +47,9 @@ end
 --------------------------------------------------------------------------------
 -- Parse tracestate header into a tracestate
 --
--- @return              tracestate
+-- @param[type=string|table] tracestate header
+--
+-- @return @{api.trace.tracestate}
 --------------------------------------------------------------------------------
 function _M.parse_tracestate(tracestate)
     if not tracestate then
@@ -95,9 +97,12 @@ end
 --------------------------------------------------------------------------------
 -- Set the key value pair for the tracestate
 --
--- @return              tracestate
+-- @param[type=string] key
+-- @param[type=string] value
+--
+-- @return @{api.trace.tracestate}
 --------------------------------------------------------------------------------
-function _M.set(self, key, value)
+function _M:set(key, value)
     if not validate_member_key(key) then
         return self
     end
@@ -116,9 +121,11 @@ end
 --------------------------------------------------------------------------------
 -- Get the value for the current key from the tracestate
 --
--- @return              value
+-- @param[type=string] key
+--
+-- @return[type=string] value
 --------------------------------------------------------------------------------
-function _M.get(self, key)
+function _M:get(key)
     for _, item in ipairs(self.values) do
         local ckey = item[1]
         if ckey == key then
@@ -131,9 +138,11 @@ end
 --------------------------------------------------------------------------------
 -- Delete the key from the tracestate
 --
--- @return              tracestate
+-- @param[type=string] key
+--
+-- @return @{api.trace.tracestate}
 --------------------------------------------------------------------------------
-function _M.del(self, key)
+function _M:del(key)
     local index = 0
     for i, item in ipairs(self.values) do
         local ckey = item[1]
@@ -151,7 +160,7 @@ end
 --------------------------------------------------------------------------------
 -- Return the header value of the tracestate
 --
--- @return              string
+-- @return[type=string]
 --------------------------------------------------------------------------------
 function _M.as_string(self)
     local output = {}
