@@ -6,10 +6,18 @@
 local metrics_reporter = require("opentelemetry.metrics_reporter")
 local envs = require("opentelemetry.api.utils.env_var_settings")
 
+-- Default to the NGINX logger when it's available
+local logger
+if ngx then
+    logger = require("opentelemetry.utils.logger.nginx"):new(envs.log_level)
+else
+    logger = require("opentelemetry.api.utils.logger.base"):new(envs.log_level)
+end
+
 local _M = {
     context_storage = nil,
     metrics_reporter = metrics_reporter,
-    logger = require('opentelemetry.utils.logger.nginx'):new(envs.log_level)
+    logger = logger
 }
 
 function _M.set_tracer_provider(tp)

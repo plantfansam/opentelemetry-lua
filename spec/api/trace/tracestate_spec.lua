@@ -1,3 +1,4 @@
+local otel_global = require("opentelemetry.global")
 local tracestate = require("opentelemetry.api.trace.tracestate")
 
 describe("is_valid", function()
