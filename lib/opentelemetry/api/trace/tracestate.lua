@@ -66,38 +66,22 @@ function _M.parse_tracestate(tracestate)
             if member ~= "" then
                 local start_pos, end_pos = string.find(member, "=", 1, true)
                 if not start_pos or start_pos == 1 then
-<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
-                    otel_global.logger:warn(error_message)
-=======
                     otel.logger:warn(ngx.WARN, error_message)
->>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 local key = validate_member_key(string.sub(member, 1, start_pos - 1))
                 if not key then
-<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
-                    otel_global.logger:warn(error_message)
-=======
                     otel.logger:warn(ngx.WARN, error_message)
->>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 local value = validate_member_value(string.sub(member, end_pos + 1))
                 if not value then
-<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
-                    otel_global.logger:warn(error_message)
-=======
                     otel.logger:warn(ngx.WARN, error_message)
->>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 members_count = members_count + 1
                 if members_count > _M.MAX_ENTRIES then
-<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
-                    otel_global.logger:warn(error_message)
-=======
                     otel.logger:warn(ngx.WARN, error_message)
->>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 table.insert(new_tracestate, { key, value })
@@ -123,11 +107,7 @@ function _M.set(self, key, value)
     self:del(key)
     if #self.values >= _M.MAX_ENTRIES then
         table.remove(self.values)
-<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
-        otel_global.logger:warn("tracestate max values exceeded, removing rightmost entry")
-=======
         otel.logger:warn("tracestate max values exceeded, removing rightmost entry")
->>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
     end
     table.insert(self.values, 1, { key, value })
     return self
