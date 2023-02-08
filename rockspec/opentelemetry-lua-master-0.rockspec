@@ -20,6 +20,7 @@ build = {
    type = "builtin",
    modules = {
        ["opentelemetry.api.trace.span_status"] = "lib/opentelemetry/api/trace/span_status.lua",
+       ["opentelemetry.api.trace.tracestate"] = "lib/opentelemetry/api/trace/tracestate.lua",
        ["opentelemetry.api.utils.env_var_settings"] = "lib/opentelemetry/api/utils/env_var_settings.lua",
        ["opentelemetry.api.utils.logger.base"] = "lib/opentelemetry/api/utils/logger/base.lua",
        ["opentelemetry.global"] = "lib/opentelemetry/global.lua",
