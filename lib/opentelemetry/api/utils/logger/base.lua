@@ -17,7 +17,10 @@ function _M:log_levels()
 end
 
 --- Return a new logger instance
+<<<<<<< HEAD
 --
+=======
+>>>>>>> ba8518c (add logger)
 -- @string log_level The log level to use. Defaults to 'error'.
 -- @return A new logger instance
 function _M:new(log_level)
@@ -27,11 +30,17 @@ function _M:new(log_level)
 end
 
 --- Write message to stdout
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 -- @param[type=number] configured_level The log level of the logger instance.
 -- @param[type=number] callsite_level The log level at which the message was logged.
 --
+=======
+-- @string message The message to write.
+-- @param[type=number] configured_level The log level of the logger instance.
+-- @param[type=number] callsite_level The log level at which the message was logged.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:write(message, configured_level, callsite_level)
     if configured_level >= self:log_levels()[callsite_level] then
@@ -40,72 +49,104 @@ function _M:write(message, configured_level, callsite_level)
 end
 
 --- Write debug message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:debug(message)
     self:write(message, self.log_level, "debug")
 end
 
 --- Write info message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:info(message)
     self:write(message, self.log_level, "info")
 end
 
 --- Write notice message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:notice(message)
     self:write(message, self.log_level, "notice")
 end
 
 --- Write warn message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:warn(message)
     self:write(message, self.log_level, "warn")
 end
 
 --- Write error message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:error(message)
     self:write(message, self.log_level, "error")
 end
 
 --- Write crit message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:crit(message)
     self:write(message, self.log_level, "crit")
 end
 
 --- Write alert message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:alert(message)
     self:write(message, self.log_level, "alert")
 end
 
 --- Write emerg message
+<<<<<<< HEAD
 --
 -- @string message The message to write.
 --
+=======
+-- @string message The message to write.
+>>>>>>> ba8518c (add logger)
 -- @return nil
 function _M:emerg(message)
     self:write(message, self.log_level, "emerg")
