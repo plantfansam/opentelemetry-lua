@@ -19,7 +19,6 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-       ["opentelemetry.api.otel"] = "lib/opentelemetry/api/otel.lua",
        ["opentelemetry.api.trace.span_status"] = "lib/opentelemetry/api/trace/span_status.lua",
        ["opentelemetry.api.utils.env_var_settings"] = "lib/opentelemetry/api/utils/env_var_settings.lua",
        ["opentelemetry.api.utils.logger.base"] = "lib/opentelemetry/api/utils/logger/base.lua",
@@ -60,7 +59,7 @@ build = {
        ["opentelemetry.trace.tracer_provider"] = "lib/opentelemetry/trace/tracer_provider.lua",
        ["opentelemetry.baggage"] = "lib/opentelemetry/baggage.lua",
        ["opentelemetry.baggage.propagation.text_map.baggage_propagator"] = "lib/opentelemetry/baggage/propagation/text_map/baggage_propagator.lua",
-       ["opentelemetry.util"] = "lib/opentelemetry/util.lua"
+       ["opentelemetry.util"] = "lib/opentelemetry/util.lua",
        ["opentelemetry.utils.logger.nginx"] = "lib/opentelemetry/utils/logger/nginx.lua",
    }
 }

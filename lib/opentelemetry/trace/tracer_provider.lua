@@ -1,5 +1,3 @@
--- When the SDK is more mature, we will want to configure this logger elsewhere
-
 local instrumentation_library_new = require("opentelemetry.instrumentation_library").new
 local resource = require("opentelemetry.resource")
 local attr = require("opentelemetry.attribute")
