@@ -12,7 +12,6 @@ local _M = {
     logger = require('opentelemetry.utils.logger.nginx'):new(envs.log_level)
 }
 
-
 function _M.set_tracer_provider(tp)
     _M.tracer_provider = tp
 end
