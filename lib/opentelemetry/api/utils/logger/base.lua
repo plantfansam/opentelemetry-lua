@@ -21,8 +21,6 @@ end
 -- @string log_level The log level to use. Defaults to 'error'.
 -- @return A new logger instance
 function _M:new(log_level)
-    ngx.log(ngx.ERR, log_level)
-    ngx.log(ngx.ERR, self:log_levels()[log_level])
     return setmetatable(
         { log_level = self:log_levels()[log_level] or self:log_levels().error },
         { __index = self })

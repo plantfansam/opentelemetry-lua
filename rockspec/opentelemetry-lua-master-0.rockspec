@@ -19,7 +19,6 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-       ["opentelemetry.api.otel"] = "lib/opentelemetry/api/otel.lua",
        ["opentelemetry.api.trace.span_status"] = "lib/opentelemetry/api/trace/span_status.lua",
        ["opentelemetry.api.utils.env_var_settings"] = "lib/opentelemetry/api/utils/env_var_settings.lua",
        ["opentelemetry.api.utils.logger.base"] = "lib/opentelemetry/api/utils/logger/base.lua",

@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- The entrypoint for the package.
 --
--- @module opentelemetry
+-- @module opentelemetry.global
 ------------------------------------------------------------------------------------------------------------------------
 local metrics_reporter = require("opentelemetry.metrics_reporter")
 local envs = require("opentelemetry.api.utils.env_var_settings")
