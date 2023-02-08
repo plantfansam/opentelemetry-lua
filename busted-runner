@@ -4,7 +4,7 @@ package.path = './lib/?.lua;./lib/?/?.lua;./lib/?/init.lua' .. package.path
 
 -- Set up global tracer
 otel_global = require("opentelemetry.global")
-otel_global.logger = require("opentelemetry.api.utils.logger.nginx"):new("debug")
+otel_global.logger = require("opentelemetry.utils.logger.nginx"):new("debug")
 local tracer_provider = require("opentelemetry.trace.tracer_provider")
 local attr = require("opentelemetry.attribute")
 local resource = require("opentelemetry.resource")

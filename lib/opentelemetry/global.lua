@@ -9,7 +9,7 @@ local envs = require("opentelemetry.api.utils.env_var_settings")
 local _M = {
     context_storage = nil,
     metrics_reporter = metrics_reporter,
-    logger = require('opentelemetry.api.utils.logger.nginx'):new(envs.log_level)
+    logger = require('opentelemetry.utils.logger.nginx'):new(envs.log_level)
 }
 
 

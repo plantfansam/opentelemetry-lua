@@ -23,7 +23,6 @@ build = {
        ["opentelemetry.api.trace.span_status"] = "lib/opentelemetry/api/trace/span_status.lua",
        ["opentelemetry.api.utils.env_var_settings"] = "lib/opentelemetry/api/utils/env_var_settings.lua",
        ["opentelemetry.api.utils.logger.base"] = "lib/opentelemetry/api/utils/logger/base.lua",
-       ["opentelemetry.api.utils.logger.nginx"] = "lib/opentelemetry/api/utils/logger/nginx.lua",
        ["opentelemetry.global"] = "lib/opentelemetry/global.lua",
        ["opentelemetry.context"] = "lib/opentelemetry/context.lua",
        ["opentelemetry.attribute"] = "lib/opentelemetry/attribute.lua",
@@ -63,5 +62,6 @@ build = {
        ["opentelemetry.baggage"] = "lib/opentelemetry/baggage.lua",
        ["opentelemetry.baggage.propagation.text_map.baggage_propagator"] = "lib/opentelemetry/baggage/propagation/text_map/baggage_propagator.lua",
        ["opentelemetry.util"] = "lib/opentelemetry/util.lua"
+       ["opentelemetry.utils.logger.nginx"] = "lib/opentelemetry/utils/logger/nginx.lua",
    }
 }
