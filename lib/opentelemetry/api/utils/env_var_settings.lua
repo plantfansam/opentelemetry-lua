@@ -12,6 +12,6 @@ local function getenv_with_fallback(env_var, fallback)
     return value
 end
 
-local _M = { getenv_with_fallback = getenv_with_fallback, log_level = getenv_with_fallback("OTEL_LOG_LEVEL", "error") }
+local _M = { getenv_with_fallback = getenv_with_fallback, log_level = getenv_with_fallback("OTEL_LOG_LEVEL", "warn") }
 
 return _M
