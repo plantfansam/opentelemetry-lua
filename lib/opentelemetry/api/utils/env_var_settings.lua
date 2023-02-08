@@ -4,7 +4,6 @@
 --
 -- @module api.utils.env_var_settings
 ------------------------------------------------------------------------------------------------------------------------
-
 local function getenv_with_fallback(env_var, fallback)
     local value = os.getenv(env_var)
     if value == nil then
@@ -13,9 +12,6 @@ local function getenv_with_fallback(env_var, fallback)
     return value
 end
 
-local _M = {
-    getenv_with_fallback = getenv_with_fallback,
-    log_level = getenv_with_fallback("OTEL_LOG_LEVEL", "error")
-}
+local _M = { getenv_with_fallback = getenv_with_fallback, log_level = getenv_with_fallback("OTEL_LOG_LEVEL", "error") }
 
 return _M
