@@ -1,13 +1,15 @@
-local otel_global = require("opentelemetry.global")
-local _M = {
-    MAX_KEY_LEN = 256,
-    MAX_VAL_LEN = 256,
-    MAX_ENTRIES = 32,
-}
+------------------------------------------------------------------------------------------------------------------------
+-- In general, tracestate is an HTTP header that provides "additional vendor-specific trace identification information".
+-- This file models the concept of tracestate as a Lua module.
+--
+-- @module api.trace.tracestate
+------------------------------------------------------------------------------------------------------------------------
 
-local mt = {
-    __index = _M
-}
+local otel = require("opentelemetry.api.otel")
+
+local _M = { MAX_KEY_LEN = 256, MAX_VAL_LEN = 256, MAX_ENTRIES = 32 }
+
+local mt = { __index = _M }
 
 local function validate_member_key(key)
     if #key > _M.MAX_KEY_LEN then
@@ -34,7 +36,7 @@ local function validate_member_value(value)
         return nil
     end
     return string.match(value,
-        [[^([ !"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~]*[!"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~])%s*$]])
+                        [[^([ !"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~]*[!"#$%%&'()*+%-./0-9:;<>?@A-Z[\%]^_`a-z{|}~])%s*$]])
 end
 
 function _M.new(values)
@@ -64,25 +66,41 @@ function _M.parse_tracestate(tracestate)
             if member ~= "" then
                 local start_pos, end_pos = string.find(member, "=", 1, true)
                 if not start_pos or start_pos == 1 then
+<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
                     otel_global.logger:warn(error_message)
+=======
+                    otel.logger:warn(ngx.WARN, error_message)
+>>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 local key = validate_member_key(string.sub(member, 1, start_pos - 1))
                 if not key then
+<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
                     otel_global.logger:warn(error_message)
+=======
+                    otel.logger:warn(ngx.WARN, error_message)
+>>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 local value = validate_member_value(string.sub(member, end_pos + 1))
                 if not value then
+<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
                     otel_global.logger:warn(error_message)
+=======
+                    otel.logger:warn(ngx.WARN, error_message)
+>>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
                 members_count = members_count + 1
                 if members_count > _M.MAX_ENTRIES then
+<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
                     otel_global.logger:warn(error_message)
+=======
+                    otel.logger:warn(ngx.WARN, error_message)
+>>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
                     return _M.new({})
                 end
-                table.insert(new_tracestate, {key, value})
+                table.insert(new_tracestate, { key, value })
             end
         end
     end
@@ -105,9 +123,13 @@ function _M.set(self, key, value)
     self:del(key)
     if #self.values >= _M.MAX_ENTRIES then
         table.remove(self.values)
+<<<<<<< HEAD:lib/opentelemetry/trace/tracestate.lua
         otel_global.logger:warn("tracestate max values exceeded, removing rightmost entry")
+=======
+        otel.logger:warn("tracestate max values exceeded, removing rightmost entry")
+>>>>>>> bbdadff (wip):lib/opentelemetry/api/trace/tracestate.lua
     end
-    table.insert(self.values, 1, {key, value})
+    table.insert(self.values, 1, { key, value })
     return self
 end
 

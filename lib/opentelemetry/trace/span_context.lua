@@ -1,4 +1,4 @@
-local tracestate = require("opentelemetry.trace.tracestate")
+local tracestate = require("opentelemetry.api.trace.tracestate")
 local _M = {
     INVALID_TRACE_ID = "00000000000000000000000000000000",
     INVALID_SPAN_ID = "0000000000000000"

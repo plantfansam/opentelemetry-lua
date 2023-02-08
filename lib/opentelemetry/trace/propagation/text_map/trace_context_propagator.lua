@@ -1,5 +1,5 @@
 local span_context = require("opentelemetry.trace.span_context")
-local tracestate = require("opentelemetry.trace.tracestate")
+local tracestate = require("opentelemetry.api.trace.tracestate")
 local text_map_getter = require("opentelemetry.trace.propagation.text_map.getter")
 local text_map_setter = require("opentelemetry.trace.propagation.text_map.setter")
 local util = require("opentelemetry.util")
