@@ -148,7 +148,7 @@ function _M.span_from_context(ctx)
     return ctx.entries[span_key] or span.non_recording_span()
 end
 
-return _Mlocal baggage = require("opentelemetry.baggage")
+local baggage = require("opentelemetry.baggage")
 local otel_global = require("opentelemetry.global")
 local non_recording_span_new = require("opentelemetry.trace.non_recording_span").new
 local noop_span = require("opentelemetry.trace.noop_span")
