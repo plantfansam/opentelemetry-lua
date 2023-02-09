@@ -30,6 +30,10 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -43,11 +47,11 @@
   <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
   <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
   <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
-  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><strong>api.trace.trace_flags</strong></li>
   <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
   <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
   <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
-  <li><strong>api.utils.env_var_settings</strong></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
   <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
   <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
 </ul>
@@ -56,17 +60,58 @@
 
 <div id="content">
 
-<h1>Module <code>api.utils.env_var_settings</code></h1>
-<p>A module for getting otel-related env var settings, specified here:
- https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md</p>
-<p></p>
+<h1>Module <code>api.trace.trace_flags</code></h1>
+<p>trace_flags contain details about the trace.</p>
+<p> There's only one flag right now, which indicates whether or not the
+ trace was sampled
+</p>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new ([hex_byte="00"])</a></td>
+	<td class="summary">Create a new traceflags instance.</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new ([hex_byte="00"])</strong>
+    </dt>
+    <dd>
+    Create a new traceflags instance.  The only two valid values for the byte are 00000000 (unsampled) and 00000001
+ (sampled)
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">hex_byte</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         String represting a 2-digit hexadecimal number (which is storable in one byte)
+         (<em>default</em> "00")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.trace_flags.html#">api.trace.trace_flags</a>
+    </ol>
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

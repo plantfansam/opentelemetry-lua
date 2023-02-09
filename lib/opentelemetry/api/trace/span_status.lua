@@ -3,6 +3,10 @@
 --
 -- @module api.trace.span_status
 ------------------------------------------------------------------------------------------------------------------------
+---
+-- @field UNSET
+-- @field OK The operation has been validated by an Application developer or Operator to have completed successfully.
+-- @field ERROR The operation contains an error.
 local _M = { UNSET = 0, OK = 1, ERROR = 2 }
 
 ------------------------------------------------------------------------------------------------------------------------

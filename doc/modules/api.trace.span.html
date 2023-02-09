@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/api.baggage.html">api.baggage</a></li>
+  <li><a href="../modules/api.context.html">api.context</a></li>
+  <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
+  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><strong>api.trace.span</strong></li>
+  <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
+  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
+  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
+  <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
+  <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>api.trace.span</code></h1>
+<p>Span represents a single operation in a trace.</p>
+<p> API spans are mostly no-ops.
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new ([span_ctx])</a></td>
+	<td class="summary">Creates a new span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_span_context">get_span_context ()</a></td>
+	<td class="summary">Returns span context associated with span</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_recording">is_recording ()</a></td>
+	<td class="summary">Returns whether or not the span is recording.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_attribute">set_attribute (_k, _v)</a></td>
+	<td class="summary">Sets single attribute on the span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_attributes">set_attributes (_attributes)</a></td>
+	<td class="summary">Sets multiple attributes on the span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add_event">add_event (_name, _attributes[, _timestamp=now])</a></td>
+	<td class="summary">Add an event to the span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_status">set_status (_status, _description)</a></td>
+	<td class="summary">Sets status on span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update_name">update_name (_name)</a></td>
+	<td class="summary">Updates the span name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#finish">finish ([_timestamp=now])</a></td>
+	<td class="summary">Signals that operation described by this span has ended.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#record_exception">record_exception ([_exception_string=now[, _attributes={}]])</a></td>
+	<td class="summary">Records an exception as an event on the span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#non_recording_span">non_recording_span (span_ctx)</a></td>
+	<td class="summary">Instantiates a new non-recording span.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#from_span_context">from_span_context (span_context)</a></td>
+	<td class="summary">Creates a new span from a span context object.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new ([span_ctx])</strong>
+    </dt>
+    <dd>
+    Creates a new span.  Should not be called directly by users — always create spans through a tracer.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">span_ctx</span>
+         The span context to use for the new span
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_span_context"></a>
+    <strong>get_span_context ()</strong>
+    </dt>
+    <dd>
+    Returns span context associated with span
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span_context.html#">api.trace.span_context</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_recording"></a>
+    <strong>is_recording ()</strong>
+    </dt>
+    <dd>
+    Returns whether or not the span is recording.  Always false for API spans.
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_attribute"></a>
+    <strong>set_attribute (_k, _v)</strong>
+    </dt>
+    <dd>
+    Sets single attribute on the span.  This is a noop for API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_k</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Attribute key
+        </li>
+        <li><span class="parameter">_v</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">{string</a>, <span class="type">number</span>, <span class="type">bool</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table}</a></span>
+         Attribute value
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_attributes"></a>
+    <strong>set_attributes (_attributes)</strong>
+    </dt>
+    <dd>
+    Sets multiple attributes on the span.  This is a noop for API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes to set on the span.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add_event"></a>
+    <strong>add_event (_name, _attributes[, _timestamp=now])</strong>
+    </dt>
+    <dd>
+    Add an event to the span.  This is a noop for API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Name of the event
+        </li>
+        <li><span class="parameter">_attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes to set on the span.
+        </li>
+        <li><span class="parameter">_timestamp</span>
+            <span class="types"><span class="type">number</span></span>
+         Timestamp of the event in nanoseconds since epoch.
+         (<em>default</em> now)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_status"></a>
+    <strong>set_status (_status, _description)</strong>
+    </dt>
+    <dd>
+    Sets status on span.  This is a noop for API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_status</span>
+            <span class="types"><span class="type">int</span></span>
+         Span status code to set on span (@see <a href="../modules/api.trace.span_status.html#">api.trace.span_status</a> for constants)
+        </li>
+        <li><span class="parameter">_description</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Description of the status, only to be used when status is errored
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update_name"></a>
+    <strong>update_name (_name)</strong>
+    </dt>
+    <dd>
+    Updates the span name.  This is a noop for API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         New name for span
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "finish"></a>
+    <strong>finish ([_timestamp=now])</strong>
+    </dt>
+    <dd>
+    Signals that operation described by this span has ended.  Noops in API spans. We use finish because end is a reserved
+ word.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_timestamp</span>
+            <span class="types"><span class="type">int</span></span>
+         Timestamp to mark as span end time (defaults to now)
+         (<em>default</em> now)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "record_exception"></a>
+    <strong>record_exception ([_exception_string=now[, _attributes={}]])</strong>
+    </dt>
+    <dd>
+    Records an exception as an event on the span.  Noops in API spans.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_exception_string</span>
+            <span class="types"><span class="type">int</span></span>
+         String description of the exception (e.g. "COULD NOT CONNECT TO UPSTREAM")
+         (<em>default</em> now)
+        </li>
+        <li><span class="parameter">_attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Optional table of attributes to set on the event.
+         (<em>default</em> {})
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "non_recording_span"></a>
+    <strong>non_recording_span (span_ctx)</strong>
+    </dt>
+    <dd>
+    Instantiates a new non-recording span.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">span_ctx</span>
+         Span context to use
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "from_span_context"></a>
+    <strong>from_span_context (span_context)</strong>
+    </dt>
+    <dd>
+    Creates a new span from a span context object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">span_context</span>
+         Span context to use
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-02-09 17:16:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

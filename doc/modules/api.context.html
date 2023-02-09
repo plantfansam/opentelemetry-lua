@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/api.baggage.html">api.baggage</a></li>
+  <li><strong>api.context</strong></li>
+  <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
+  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
+  <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
+  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
+  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
+  <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
+  <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>api.context</code></h1>
+<p>The context module represents OpenTelemetry context.</p>
+<p> Beware - this is different than SpanContext!</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new ([entries={}])</a></td>
+	<td class="summary">Create new context with set of entries</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#attach">attach ()</a></td>
+	<td class="summary">Set this context object as current by pushing it on stack stored at context_key in otel_global.context_storage.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#detach">detach (token)</a></td>
+	<td class="summary">Detach current context, setting current context to previous element in stack If token does not match length of
+ elements in stack, returns false and error string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#current">current ()</a></td>
+	<td class="summary">Get current context, which is the final element in stack stored at context_key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get">get (key)</a></td>
+	<td class="summary">Retrieve value for key in context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set">set (key, value)</a></td>
+	<td class="summary">Set value for key in context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#with_span">with_span (sp)</a></td>
+	<td class="summary">Create a new context instance with supplied span set as current.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#span">span ()</a></td>
+	<td class="summary">Returns span associated with this context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#inject_baggage">inject_baggage (baggage)</a></td>
+	<td class="summary">Inject baggage into current context</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#extract_baggage">extract_baggage ()</a></td>
+	<td class="summary">Extract baggage from context.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#span_from_context">span_from_context (ctx)</a></td>
+	<td class="summary">Returns the span from the supplied context.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new ([entries={}])</strong>
+    </dt>
+    <dd>
+    Create new context with set of entries
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">entries</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of entries to set in context
+         (<em>default</em> {})
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        context
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "attach"></a>
+    <strong>attach ()</strong>
+    </dt>
+    <dd>
+    Set this context object as current by pushing it on stack stored at context_key in otel_global.context_storage.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Integer Token to be used for detaching
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "detach"></a>
+    <strong>detach (token)</strong>
+    </dt>
+    <dd>
+    Detach current context, setting current context to previous element in stack If token does not match length of
+ elements in stack, returns false and error string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">token</span>
+            <span class="types"><span class="type">int</span></span>
+         Token by the attach call, which should match the length of the stack
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean Whether or not detach was successful
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "current"></a>
+    <strong>current ()</strong>
+    </dt>
+    <dd>
+    Get current context, which is the final element in stack stored at context_key.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.context.html#">api.context</a> Current context
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get"></a>
+    <strong>get (key)</strong>
+    </dt>
+    <dd>
+    Retrieve value for key in context.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Key for which to set the value in context
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        value stored at key
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set"></a>
+    <strong>set (key, value)</strong>
+    </dt>
+    <dd>
+    Set value for key in context.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Key for which to set the value in context
+        </li>
+        <li><span class="parameter">value</span>
+         Value to set to set in context
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.context.html#">api.context</a> New context with value set
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "with_span"></a>
+    <strong>with_span (sp)</strong>
+    </dt>
+    <dd>
+    Create a new context instance with supplied span set as current.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sp</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.context.html#">api.context</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "span"></a>
+    <strong>span ()</strong>
+    </dt>
+    <dd>
+    Returns span associated with this context.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.context.html#">api.context</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "inject_baggage"></a>
+    <strong>inject_baggage (baggage)</strong>
+    </dt>
+    <dd>
+    Inject baggage into current context
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">baggage</span>
+         Baggage instance to inject
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.context.html#">api.context</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "extract_baggage"></a>
+    <strong>extract_baggage ()</strong>
+    </dt>
+    <dd>
+    Extract baggage from context.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.baggage.html#">api.baggage</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "span_from_context"></a>
+    <strong>span_from_context (ctx)</strong>
+    </dt>
+    <dd>
+    Returns the span from the supplied context.  It defaults to the current context. If no span is present on context, it
+ returns a nonrecording span.
+<p> TODO: consider relocating this elsewhere.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ctx</span>
+         Context from which to retrieve span
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-02-09 17:16:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

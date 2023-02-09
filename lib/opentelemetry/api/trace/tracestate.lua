@@ -4,7 +4,6 @@
 --
 -- @module api.trace.tracestate
 ------------------------------------------------------------------------------------------------------------------------
-
 local otel_global = require("opentelemetry.global")
 
 local _M = { MAX_KEY_LEN = 256, MAX_VAL_LEN = 256, MAX_ENTRIES = 32 }

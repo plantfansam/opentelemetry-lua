@@ -22,7 +22,7 @@ openresty-build:
 	$(CONTAINER_ORCHESTRATOR) build
 
 doc:
-	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- utils bash -c 'ldoc lib/opentelemetry/api'
+	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- utils bash -c 'ldoc --all lib/opentelemetry/api'
 
 check-format:
 	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- utils bash -c 'lua-format --check lib/opentelemetry/api/**/*.lua spec/api/**/*.lua'
@@ -31,4 +31,4 @@ format:
 	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- utils bash -c 'lua-format -i lib/opentelemetry/api/**/*.lua  spec/api/**/*.lua'
 
 api-test:
-	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- openresty bash -c 'busted -m "./lib/?.lua;./lib/?/?.lua;./lib/?/?/?.lua" ./spec/api'
+	$(CONTAINER_ORCHESTRATOR) run --no-deps $(CONTAINER_ORCHESTRATOR_EXEC_OPTIONS) -- openresty bash -c 'busted -m "./lib/?.lua;./lib/?/?.lua;./lib/?/?/?.lua" ./spec/api/'

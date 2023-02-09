@@ -30,6 +30,10 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Tables">Tables</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -41,13 +45,13 @@
   <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
   <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
   <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
-  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><strong>api.trace.span_kind</strong></li>
   <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
   <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
   <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
   <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
   <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
-  <li><strong>api.utils.env_var_settings</strong></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
   <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
   <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
 </ul>
@@ -56,17 +60,62 @@
 
 <div id="content">
 
-<h1>Module <code>api.utils.env_var_settings</code></h1>
-<p>A module for getting otel-related env var settings, specified here:
- https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md</p>
+<h1>Module <code>api.trace.span_kind</code></h1>
+<p>The span kind describes the relationship between the span, its parents, and its children in a Trace.</p>
 <p></p>
 
 
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#_M">_M</a></td>
+	<td class="summary">Map of span kinds</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "_M"></a>
+    <strong>_M</strong>
+    </dt>
+    <dd>
+    Map of span kinds
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">UNSPECIFIED</span>
+
+        </li>
+        <li><span class="parameter">INTERNAL</span>
+         Default value. Indicates that the span represents an internal operation within an application, as opposed to an operations with remote parents or children.
+        </li>
+        <li><span class="parameter">SERVER</span>
+          Indicates that the span covers server-side handling of a synchronous RPC or other remote request.
+        </li>
+        <li><span class="parameter">PRODUCER</span>
+         Indicates that the span describes the initiators of an asynchronous request.
+        </li>
+        <li><span class="parameter">CLIENT</span>
+         Indicates that the span describes a request to some remote service.
+        </li>
+        <li><span class="parameter">CONSUMER</span>
+         Indicates that the span describes a child of an asynchronous PRODUCER request.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

@@ -30,6 +30,10 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -37,7 +41,7 @@
   <li><a href="../modules/api.baggage.html">api.baggage</a></li>
   <li><a href="../modules/api.context.html">api.context</a></li>
   <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
-  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><strong>api.trace.id_generator</strong></li>
   <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
   <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
   <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
@@ -47,7 +51,7 @@
   <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
   <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
   <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
-  <li><strong>api.utils.env_var_settings</strong></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
   <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
   <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
 </ul>
@@ -56,17 +60,74 @@
 
 <div id="content">
 
-<h1>Module <code>api.utils.env_var_settings</code></h1>
-<p>A module for getting otel-related env var settings, specified here:
- https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md</p>
+<h1>Module <code>api.trace.id_generator</code></h1>
+<p>This API-only ID generator doesn't use any LuaJIT methods/packages.</p>
 <p></p>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#generate_span_id">generate_span_id ()</a></td>
+	<td class="summary">Create a new span id.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#generate_trace_id">generate_trace_id ()</a></td>
+	<td class="summary">Create a new trace id.</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "generate_span_id"></a>
+    <strong>generate_span_id ()</strong>
+    </dt>
+    <dd>
+    Create a new span id.  There is likely a more performant way to do this - PRs welcome!
+ TODO: investiage possibility of calling random less against larger integers.
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        16-character hexadecimal span id
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "generate_trace_id"></a>
+    <strong>generate_trace_id ()</strong>
+    </dt>
+    <dd>
+    Create a new trace id.  There is likely a more performant way to do this - PRs welcome!
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        32-character hexadecimal trace id
+    </ol>
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

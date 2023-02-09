@@ -30,6 +30,10 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -38,7 +42,7 @@
   <li><a href="../modules/api.context.html">api.context</a></li>
   <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
   <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
-  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><strong>api.trace.link</strong></li>
   <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
   <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
   <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
@@ -47,7 +51,7 @@
   <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
   <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
   <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
-  <li><strong>api.utils.env_var_settings</strong></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
   <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
   <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
 </ul>
@@ -56,17 +60,61 @@
 
 <div id="content">
 
-<h1>Module <code>api.utils.env_var_settings</code></h1>
-<p>A module for getting otel-related env var settings, specified here:
- https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md</p>
-<p></p>
+<h1>Module <code>api.trace.link</code></h1>
+<p>A Span may be linked to zero or more other Spans (defined by SpanContext) that are causally related.</p>
+<p> Links can point
+ to Spans inside a single Trace or across different Traces. Links can be used to represent batched operations where a
+ Span was initiated by multiple initiating Spans, each representing a single incoming item being processed in the
+ batch.
+</p>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new (span_context[, attributes={}])</a></td>
+	<td class="summary">Create a link</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new (span_context[, attributes={}])</strong>
+    </dt>
+    <dd>
+    Create a link
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">span_context</span>
+         The span context to link to
+        </li>
+        <li><span class="parameter">attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes describing the link.
+         (<em>default</em> {})
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.link.html#">api.trace.link</a>
+    </ol>
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

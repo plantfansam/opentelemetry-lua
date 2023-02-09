@@ -19,7 +19,7 @@ describe("log_level", function()
 
     it("defaults to error", function()
         evs = require("opentelemetry.api.utils.env_var_settings")
-        assert.are_equal(evs.log_level, "error")
+        assert.are_equal(evs.log_level, "warn")
     end)
 
     it("respects OTEL_LOG_LEVEL variable", function()

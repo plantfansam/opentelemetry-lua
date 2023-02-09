@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/api.baggage.html">api.baggage</a></li>
+  <li><a href="../modules/api.context.html">api.context</a></li>
+  <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
+  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
+  <li><strong>api.trace.span_context</strong></li>
+  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
+  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
+  <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
+  <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>api.trace.span_context</code></h1>
+<p>From the spec, "a SpanContext represents the portion of a Span which must be serialized and propagated along side of a
+ distributed context."</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new (trace_id, span_id[, trace_flags=unsampled[, trace_state={}[, remote=false]]])</a></td>
+	<td class="summary">Create a new SpanContext</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_sampled">is_sampled ()</a></td>
+	<td class="summary">Whether or not the span is sampled.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hex_trace_id">hex_trace_id ()</a></td>
+	<td class="summary">Hexadecimal representation of the trace_id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#binary_trace_id">binary_trace_id ()</a></td>
+	<td class="summary">Binary representation of the trace_id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hex_span_id">hex_span_id ()</a></td>
+	<td class="summary">Hexadecimal representation of the span_id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#binary_span_id">binary_span_id ()</a></td>
+	<td class="summary">Binary representation of the span_id</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_valid">is_valid ()</a></td>
+	<td class="summary">Returns true if trace id and span id are nonzero</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_remote">is_remote ()</a></td>
+	<td class="summary">Returns true if span context was propagated from remote parent</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new (trace_id, span_id[, trace_flags=unsampled[, trace_state={}[, remote=false]]])</strong>
+    </dt>
+    <dd>
+    Create a new SpanContext
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">trace_id</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Trace id, hexadecimal
+        </li>
+        <li><span class="parameter">span_id</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Span id, hexadecimal
+        </li>
+        <li><span class="parameter">trace_flags</span>
+         Trace flags instance
+         (<em>default</em> unsampled)
+        </li>
+        <li><span class="parameter">trace_state</span>
+         Trace state instance
+         (<em>default</em> {})
+        </li>
+        <li><span class="parameter">remote</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Whether or not the span context was propagated from remote parent
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span_context.html#">api.trace.span_context</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_sampled"></a>
+    <strong>is_sampled ()</strong>
+    </dt>
+    <dd>
+    Whether or not the span is sampled.
+ We use a simple string comparison, here, because the only valid values for traceflags are "00" and "01".
+
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        boolean
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hex_trace_id"></a>
+    <strong>hex_trace_id ()</strong>
+    </dt>
+    <dd>
+    Hexadecimal representation of the trace_id
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "binary_trace_id"></a>
+    <strong>binary_trace_id ()</strong>
+    </dt>
+    <dd>
+    Binary representation of the trace_id
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hex_span_id"></a>
+    <strong>hex_span_id ()</strong>
+    </dt>
+    <dd>
+    Hexadecimal representation of the span_id
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "binary_span_id"></a>
+    <strong>binary_span_id ()</strong>
+    </dt>
+    <dd>
+    Binary representation of the span_id
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        string
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_valid"></a>
+    <strong>is_valid ()</strong>
+    </dt>
+    <dd>
+    Returns true if trace id and span id are nonzero
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_remote"></a>
+    <strong>is_remote ()</strong>
+    </dt>
+    <dd>
+    Returns true if span context was propagated from remote parent
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-02-09 17:16:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

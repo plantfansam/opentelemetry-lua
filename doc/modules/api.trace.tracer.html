@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/api.baggage.html">api.baggage</a></li>
+  <li><a href="../modules/api.context.html">api.context</a></li>
+  <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
+  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
+  <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
+  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
+  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><strong>api.trace.tracer</strong></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
+  <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
+  <li><a href="../modules/api.utils.utils.html">api.utils.utils</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>api.trace.tracer</code></h1>
+<p>The tracer is responsible for creating Spans.</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#new">new (tracer_provider[, schema_url=""[, attributes={}]])</a></td>
+	<td class="summary">Create a new tracer</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#start_span">start_span (_name[, parent_context=current span[, _span_kind=INTERNAL[, _attributes={}[, _links={}[, _start_timestamp_ns=current time]]]]])</a></td>
+	<td class="summary">Start a span
+<p> From the spec on API-only implementations: "The API MUST return a non-recording Span with the SpanContext in the
+ parent Context (whether explicitly given or implicit current).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#in_span">in_span (name, fn[, attributes={}[, links={}]])</a></td>
+	<td class="summary">A convenience method for wrapping code in a span (i.e.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "new"></a>
+    <strong>new (tracer_provider[, schema_url=""[, attributes={}]])</strong>
+    </dt>
+    <dd>
+    Create a new tracer
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tracer_provider</span>
+         The tracer provider that created this tracer
+        </li>
+        <li><span class="parameter">schema_url</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The schema url that should be recorded in the emitted telemetry
+         (<em>default</em> "")
+        </li>
+        <li><span class="parameter">attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes
+         (<em>default</em> {})
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.tracer.html#">api.trace.tracer</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "start_span"></a>
+    <strong>start_span (_name[, parent_context=current span[, _span_kind=INTERNAL[, _attributes={}[, _links={}[, _start_timestamp_ns=current time]]]]])</strong>
+    </dt>
+    <dd>
+    Start a span
+<p> From the spec on API-only implementations: "The API MUST return a non-recording Span with the SpanContext in the
+ parent Context (whether explicitly given or implicit current).  If the Span in the parent Context is already
+ non-recording, it SHOULD be returned directly without instantiating a new Span. If the parent Context contains no
+ Span, an empty non-recording Span MUST be returned instead (i.e., having a SpanContext with all-zero Span and Trace
+ IDs, empty Tracestate, and unsampled TraceFlags). This means that a SpanContext that has been provided by a
+ configured Propagator will be propagated through to any child span and ultimately also Inject, but that no new
+ SpanContexts will be created."
+<p> Users should prefer setting attributes in this method (yes, this one!), rather than calling set_attributes on a span,
+ for both performance and sampling reasons.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">_name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the span
+        </li>
+        <li><span class="parameter">parent_context</span>
+         The parent context (a full context object, not a span context).
+         (<em>default</em> current span)
+        </li>
+        <li><span class="parameter">_span_kind</span>
+         The kind of span to create.
+         (<em>default</em> INTERNAL)
+        </li>
+        <li><span class="parameter">_attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes.
+         (<em>default</em> {})
+        </li>
+        <li><span class="parameter">_links</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Integer-keyed table of <a href="../modules/api.trace.link.html#">api.trace.link</a> instances
+         (<em>default</em> {})
+        </li>
+        <li><span class="parameter">_start_timestamp_ns</span>
+            <span class="types"><span class="type">int</span></span>
+         Start timestamp in nanoseconds since epoch.
+         (<em>default</em> current time)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <a href="../modules/api.trace.span.html#">api.trace.span</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "in_span"></a>
+    <strong>in_span (name, fn[, attributes={}[, links={}]])</strong>
+    </dt>
+    <dd>
+    A convenience method for wrapping code in a span (i.e.  this method takes care of both starting and
+ finishing a span). It wraps the supplied function in a pcall; if there's an error, that gets recorded on the span and
+ re-raised.
+<p> Use it like so: tracer:in_span("my span name", function() print("hi") end)
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the span
+        </li>
+        <li><span class="parameter">fn</span>
+            <span class="types"><span class="type">function</span></span>
+         A function to execute in the span (can be anonymous)
+        </li>
+        <li><span class="parameter">attributes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Table of attributes
+         (<em>default</em> {})
+        </li>
+        <li><span class="parameter">links</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Integer-keyed table of <a href="../modules/api.trace.link.html#">api.trace.link</a> instances
+         (<em>default</em> {})
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-02-09 17:16:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

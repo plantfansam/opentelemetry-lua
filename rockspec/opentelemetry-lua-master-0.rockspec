@@ -19,6 +19,7 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
+       ["opentelemetry.api.trace.link"] = "lib/opentelemetry/api/trace/link.lua",
        ["opentelemetry.api.trace.span_status"] = "lib/opentelemetry/api/trace/span_status.lua",
        ["opentelemetry.api.trace.tracestate"] = "lib/opentelemetry/api/trace/tracestate.lua",
        ["opentelemetry.api.utils.env_var_settings"] = "lib/opentelemetry/api/utils/env_var_settings.lua",

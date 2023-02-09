@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Local_Functions">Local Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/api.baggage.html">api.baggage</a></li>
+  <li><a href="../modules/api.context.html">api.context</a></li>
+  <li><a href="../modules/api.trace.event.html">api.trace.event</a></li>
+  <li><a href="../modules/api.trace.id_generator.html">api.trace.id_generator</a></li>
+  <li><a href="../modules/api.trace.link.html">api.trace.link</a></li>
+  <li><a href="../modules/api.trace.span.html">api.trace.span</a></li>
+  <li><a href="../modules/api.trace.span_context.html">api.trace.span_context</a></li>
+  <li><a href="../modules/api.trace.span_kind.html">api.trace.span_kind</a></li>
+  <li><a href="../modules/api.trace.span_status.html">api.trace.span_status</a></li>
+  <li><a href="../modules/api.trace.trace_flags.html">api.trace.trace_flags</a></li>
+  <li><a href="../modules/api.trace.tracer.html">api.trace.tracer</a></li>
+  <li><a href="../modules/api.trace.tracer_provider.html">api.trace.tracer_provider</a></li>
+  <li><a href="../modules/api.trace.tracestate.html">api.trace.tracestate</a></li>
+  <li><a href="../modules/api.utils.env_var_settings.html">api.utils.env_var_settings</a></li>
+  <li><a href="../modules/api.utils.logger.base.html">api.utils.logger.base</a></li>
+  <li><strong>api.utils.utils</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>api.utils.utils</code></h1>
+<p>Grab bag of utils.</p>
+<p> The API version of utils is LuaJIT-free.
+</p>
+
+
+<h2><a href="#Local_Functions">Local Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#hex_to_binary">hex_to_binary (hex)</a></td>
+	<td class="summary">Convert a hex string to a binary string
+<p> There are likely other, better ways to do this, but we don't want to pull in a dependency, and we also want to
+ maintain compatibility with Lua 5.1, which is LuaJIT's latest supported release.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#int_to_hex">int_to_hex (i)</a></td>
+	<td class="summary"></td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#percent_encode_baggage_string">percent_encode_baggage_string (string)</a></td>
+	<td class="summary">Percent encode a baggage string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_as_string">table_as_string (tt, indent, done)</a></td>
+	<td class="summary">Recursively render a table as a string
+ Code from http://lua-users.org/wiki/TableSerialization</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Local_Functions"></a>Local Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "hex_to_binary"></a>
+    <strong>hex_to_binary (hex)</strong>
+    </dt>
+    <dd>
+    Convert a hex string to a binary string
+<p> There are likely other, better ways to do this, but we don't want to pull in a dependency, and we also want to
+ maintain compatibility with Lua 5.1, which is LuaJIT's latest supported release.  If you know a better, faster way to
+ do this, please make a PR! The premise is that we match an input string on 2 hexadecimal characters (%x%x) - each hex
+ character is 4 bits, or half a byte -- and then turn the two characters — interpreted together — as a decimal number
+ (tonumber takes an arg which specifies the base to use in conversion). Once we have a decimap, we call string.char on
+ that, which returns a "character [that] has the internal numerical code equal to its corresponding argument." We do
+ this for each hexadecimal byte and stitch it all together. This means we're basically creating a string of bytes that
+ correspond to non-alphanumeric ASCII codes (BEL, ACK, etc.) that have the binary encoding we want. This ultimately
+ plays nicely with our protobuf library, so there you go.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">hex</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         A string of hex digits
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        A binary string representing the number encoded in the hex digits
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "int_to_hex"></a>
+    <strong>int_to_hex (i)</strong>
+    </dt>
+    <dd>
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">i</span>
+            <span class="types"><span class="type">integer</span></span>
+         A number between 0 and 255
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        A zero-padded hexadecimal representation of the number
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "percent_encode_baggage_string"></a>
+    <strong>percent_encode_baggage_string (string)</strong>
+    </dt>
+    <dd>
+    Percent encode a baggage string.  It's not generic for all percent encoding,
+ since we don't want to percent-encode equals signs, semicolons, or commas in
+ baggage strings.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         String to be sent as baggage list item
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        new context with baggage associated
+<p> adapted from https://gist.github.com/liukun/f9ce7d6d14fa45fe9b924a3eed5c3d99
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_as_string"></a>
+    <strong>table_as_string (tt, indent, done)</strong>
+    </dt>
+    <dd>
+    Recursively render a table as a string
+ Code from http://lua-users.org/wiki/TableSerialization
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">tt</span>
+
+        </li>
+        <li><span class="parameter">indent</span>
+
+        </li>
+        <li><span class="parameter">done</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2023-02-09 17:16:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
