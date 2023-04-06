@@ -52,6 +52,7 @@ local function process_batches_timer(self, batches)
     if not hdl then
         ngx.log(ngx.ERR, "failed to create timer: ", err)
     end
+    self.is_timer_running = true
 end
 
 local function flush_batches(premature, self)
@@ -165,7 +166,13 @@ function _M.on_end(self, span)
         otel_global.metrics_reporter:observe_value(buffer_utilization_metric, self:get_queue_size()/ self.max_queue_size)
         local batches_to_process = self.batches_to_process
         self.batches_to_process = {}
-        process_batches_timer(self, batches_to_process)
+
+        if not self.is_timer_running then
+            otel_global.metrics_reporter:add_to_counter("otel_bsp_buffer_overflow_export", 1, { timer_running = "false" })
+            process_batches_timer(self, batches_to_process)
+        else
+            otel_global.metrics_reporter:add_to_counter("otel_bsp_buffer_overflow_export", 1, { timer_running = "true" })
+        end
     end
 
     table.insert(self.queue, span)
