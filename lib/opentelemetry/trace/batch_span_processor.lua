@@ -41,6 +41,13 @@ local function process_batches(premature, self, batches)
     end
 
     for _, batch in ipairs(batches) do
+        spans = {}
+        for x, y in ipairs(batch) do
+            table.insert(spans, y.ctx.span_id)
+        end
+        spans = table.concat(spans, " ")
+        ngx.log(ngx.ERR, "worker pid: " .. ngx.worker.pid() .. " EXPORTING SPANS spans: " .. spans .. " | ")
+
         otel_global.metrics_reporter:record_value(batch_size_metric, #batch)
         local success, err = self.exporter:export_spans(batch)
         report_result(success, err, #batch)
@@ -149,6 +156,8 @@ function _M.new(exporter, opts)
 end
 
 function _M.on_end(self, span)
+    ngx.log(ngx.ERR, "worker pid: " .. ngx.worker.pid() .. " span id " ..span.ctx.span_id .. " queue addr: " .. tostring(self.queue) .. " |")
+
     if not span.ctx:is_sampled() or self.closed then
         return
     end
@@ -156,7 +165,7 @@ function _M.on_end(self, span)
     if self:get_queue_size() >= self.max_queue_size then
         -- drop span
         if self.drop_on_queue_full then
-            ngx.log(ngx.WARN, "queue is full, drop span: trace_id = ", span.ctx.trace_id, " span_id = ", span.ctx.span_id)
+            ngx.log(ngx.ERR, "queue is full, drop span: trace_id = ", span.ctx.trace_id, " span_id = ", span.ctx.span_id)
             report_dropped_spans(1, "buffer-full")
             return
         end
