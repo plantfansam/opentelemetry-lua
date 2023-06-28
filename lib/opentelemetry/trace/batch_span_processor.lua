@@ -156,8 +156,6 @@ function _M.new(exporter, opts)
 end
 
 function _M.on_end(self, span)
-    ngx.log(ngx.ERR, "worker pid: " .. ngx.worker.pid() .. " span id " ..span.ctx.span_id .. " queue addr: " .. tostring(self.queue) .. " |")
-
     if not span.ctx:is_sampled() or self.closed then
         return
     end

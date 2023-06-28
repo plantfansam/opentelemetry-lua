@@ -13,7 +13,7 @@ function _M.init_worker()
     local bsp = batch_span_processor_new(exporter, {
         max_queue_size = ngx.worker.pid(),
         max_export_batch_size = 4,
-        batch_timeout = 10,
+        batch_timeout = 1,
     })
 
     -- create tracer provider
@@ -27,11 +27,12 @@ function _M.init_worker()
 
     -- Log some stuff
     ngx.log(ngx.ERR,
-        "worker pid:" .. ngx.worker.pid() .. " bsp addr: " .. tostring(bsp) .. " queue addr: " .. tostring(bsp.queue) ..  " max queue size: " .. bsp.max_queue_size)
+        "worker pid: " .. ngx.worker.pid() .. " max queue size: " .. bsp.max_queue_size)
 end
 
 function _M.rewrite()
     local ctx, span = _M.tracer:start(new_context(), "demo endpoint")
+    ngx.log(ngx.ERR, "worker pid: " .. ngx.worker.pid() .. " span id: " .. span.ctx.span_id .. " | ")
     ngx.ctx["opentelemetry"] = {
         span_ctx = ctx
     }
